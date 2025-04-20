@@ -1,0 +1,97 @@
+/* 폼 컨테이너 스타일 */
+form {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 각 폼 그룹(레이블과 입력 필드)의 간격 */
+form div {
+  margin-bottom: 15px;
+}
+
+/* 레이블 스타일 */
+form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* 입력, 텍스트 영역, 선택 요소 스타일 */
+form input,
+form textarea,
+form select {
+  width: calc(100% - 20px);
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+/* 포커스 시 입력 필드 스타일 */
+form input:focus,
+form textarea:focus,
+form select:focus {
+  border-color: #66afe9;
+}
+
+/* 버튼 스타일 */
+form button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+form .button-red {
+  background-color: #ff6666;
+  color: #000000;
+}
+form .button-yellow {
+  background-color: #fffe8f;
+  color: #000000;
+}
+form .button-green {
+  background-color: #a0ffa3;
+  color: #000000;
+}
+form .button-red:hover {
+  background-color: #d30000;
+  color: #000000;
+}
+form .button-yellow:hover {
+  background-color: #d6d000;
+  color: #000000;
+}
+form .button-green:hover {
+  background-color: #00cd06;
+  color: #000000;
+}
+
+/* 버튼 호버 시 효과 */
+form button:hover {
+  background-color: #0056b3;
+}
+.buttonDiv {
+  text-align: right;
+}
+.formTitle p,
+h2 {
+  text-align: center;
+  font-weight: bold;
+}
+
+.formTitle h2 {
+  font-size: 30px;
+  padding: 30px;
+}
