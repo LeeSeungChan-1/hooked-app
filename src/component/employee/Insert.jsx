@@ -1,7 +1,8 @@
-import React, {useRef, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import '../../css/form.css'
 import {insertPost} from "../../api/employeeApi.js";
 import useCustomNavigate from "../../hook/useCustomNavigate.jsx";
+import {selectAllGet} from "../../api/positionApi.js";
 
 const initState = {
     number: '', // 사원번호
@@ -129,8 +130,9 @@ function Insert() {
         try {
             const res = await insertPost(formData)
             alert('저장되었습니다.')
-            replaceNavigate('/employee/read/'+res.data.employeeId)
+            replaceNavigate('/employee/read/'+res.data.id)
         }catch(error){
+            console.log(error)
             setErrors(error.response.data)
         }
 

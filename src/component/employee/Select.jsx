@@ -6,15 +6,15 @@ import useCustomLogin from "../../hook/useCustomLogin.jsx";
 import useCustomNavigate from "../../hook/useCustomNavigate.jsx";
 
 const initState = {
-    employeeId: '', // 사원id
+    id: '', // 사원id
     number: '', // 사원번호
     name: '', // 이름
     email: '', // 이메일
     phoneNumber: '', // 전화번호
     hireDate: '', // 고용일자
     status: '', // 상태
-    departmentName: '', // 부서명
-    positionName: '', // 직책명
+    department: {name: ''}, // 부서
+    position: {name: ''}, // 직책
     imageUrl: '', // 사진파일
 }
 
@@ -70,7 +70,7 @@ function Select() {
                     <input
                         id="departmentName" name="departmentName" type="text"
                         minLength={2} maxLength={10} required={true} readOnly={true}
-                        value={employee.departmentName}
+                        value={employee.department.name}
                     />
                 </div>
                 <div>
@@ -78,7 +78,7 @@ function Select() {
                     <input
                         id="positionName" name="positionName" type="text"
                         minLength={2} maxLength={10} required={true} readOnly={true}
-                        value={employee.positionName}
+                        value={employee.position.name}
                     />
                 </div>
                 <div>
