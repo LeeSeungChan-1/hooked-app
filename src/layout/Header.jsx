@@ -41,9 +41,13 @@ function Header() {
         }
     };
 
-    const handleProfile = () => {
+    const handlePasswordModify = () => {
         handleCloseUserMenu()
-        navigate('/employee/profile');
+        navigate('/employee/passwordModify');
+    };
+
+    const handleHome = () => {
+        navigate('/');
     };
 
     const [anchorElUser, setAnchorElUser] = useState(null);
@@ -66,7 +70,7 @@ function Header() {
 
                 >
                     <DomainIcon sx={{ mr: 1, fontSize: 40 }} />
-                    <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                    <Typography onClick={handleHome} variant="h6" sx={{ fontWeight: 'bold' }}>
                         Hooked
                     </Typography>
                 </Box>
@@ -97,8 +101,8 @@ function Header() {
                         onClose={handleCloseUserMenu}
                     >
                         {loginState.username ? [
-                                <MenuItem key={'profile'} onClick={handleProfile}>
-                                    <Typography sx={{ textAlign: 'center' }}>프로필 보기</Typography>
+                                <MenuItem key={'profile'} onClick={handlePasswordModify}>
+                                    <Typography sx={{ textAlign: 'center' }}>비밀번호 수정</Typography>
                                 </MenuItem>,
                                 <MenuItem key={'logout'} onClick={handleClickLogout}>
                                     <Typography sx={{ textAlign: 'center' }}>로그아웃</Typography>

@@ -25,14 +25,9 @@ export const insertPost = async (employee) => {
 };
 
 export const updatePasswordPut = async (password) => {
-  try {
+  const res = await jwtAxios.put(`${host}/password`, password, X_WWW_FORM_URLENCODED);
 
-    const res = await jwtAxios.put(`${host}/password`, password, X_WWW_FORM_URLENCODED);
-
-    return res.data;
-  } catch (error) {
-    return error;
-  }
+  return res;
 };
 
 export const selectAllGet = async (pageParam) => {

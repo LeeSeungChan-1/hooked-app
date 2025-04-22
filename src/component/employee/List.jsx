@@ -82,12 +82,12 @@ function List() {
                         </TableCell>
                         <TableCell align="center">{employee.name}</TableCell>
                         <TableCell align="center">{employee.number}</TableCell>
-                        <TableCell align="center">{employee.departmentName}</TableCell>
-                        <TableCell align="center">{employee.positionName}</TableCell>
+                        <TableCell align="center">{employee.department.name}</TableCell>
+                        <TableCell align="center">{employee.position.name}</TableCell>
                         <TableCell align="center">{employee.phoneNumber}</TableCell>
                         <TableCell align="center">{employee.email}</TableCell>
                         <TableCell align="center">{employee.hireDate}</TableCell>
-                        <TableCell align="center">{employee.status}</TableCell>
+                        <TableCell align="center">{employee.status ? '재직중': '퇴직'}</TableCell>
                     </TableRow>
                 ))}
             </TableBody>

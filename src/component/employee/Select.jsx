@@ -2,7 +2,6 @@ import React, {useEffect,useState} from 'react'
 import '../../css/form.css'
 import {selectGet} from "../../api/employeeApi.js";
 import {useParams} from "react-router-dom";
-import useCustomLogin from "../../hook/useCustomLogin.jsx";
 import useCustomNavigate from "../../hook/useCustomNavigate.jsx";
 
 const initState = {
@@ -110,7 +109,7 @@ function Select() {
                     <input
                         id="status" name="status" type="text"
                         readOnly={true}
-                        value={employee.status}
+                        value={employee.status ? '재직' : '퇴직'}
                     />
                 </div>
                 <div className='buttonDiv'>

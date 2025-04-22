@@ -1,4 +1,4 @@
-import React, {lazy, Suspense} from "react"
+import React, {lazy} from "react"
 import LoginCheck from "../component/common/LoginCheck.jsx"
 import config from "../../config.js"
 
@@ -8,9 +8,6 @@ const Login = lazy(() => import("../component/employee/Login.jsx"))
 const List = lazy(() => import("../component/employee/List.jsx"))
 const UpdatePassword = lazy(() => import("../component/employee/UpdatePassword.jsx"))
 const Select = lazy(() => import("../component/employee/Select.jsx"))
-
-
-
 
 const employeeRouter = () =>{
     return [
@@ -50,10 +47,6 @@ const employeeRouter = () =>{
                 <Select/>
             </LoginCheck>
     }
-
-
 ]}
-
-
 
 export default employeeRouter

@@ -122,9 +122,9 @@ function Insert() {
         formData.append('email', employee.email)
         formData.append('phoneNumber', employee.phoneNumber)
         formData.append('hireDate', employee.hireDate)
+
         if(employee.employeeImage){ // 저장된 이미지가 있을 경우에만 폼과 같이 요청
             formData.append('employeeImage', employee.employeeImage)
-
         }
 
         try {
