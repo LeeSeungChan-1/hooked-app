@@ -1,6 +1,5 @@
 // src/config.js
 const config = {
-  API_SERVER_HOST: "http://localhost:8080", // 서버 ip
   PREFIX: {
     // 부서 프리픽스
     employee: "hr",

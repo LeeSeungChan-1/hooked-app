@@ -1,10 +1,9 @@
 import axios from "axios";
 import { getCookie, removeCookie, setCookie } from "./cookieUtil.js";
-import Config from "../../config.js";
 
 const jwtAxios = axios.create();
 
-const API_SERVER_HOST = Config.API_SERVER_HOST;
+const API_SERVER_HOST = import.meta.env.VITE_API_SERVER_HOST;
 
 export const refreshJWT = async (accessToken, refreshToken) => {
   // jwt 토큰 만료 시 access토큰 새로 발급받는 함수

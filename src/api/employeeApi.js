@@ -1,10 +1,9 @@
 import axios from "axios";
-import Config from "../../config.js";
 import jwtAxios from "../util/jwtUtil.js";
 import apiHeader from "./apiHeader.js";
 
-const { API_SERVER_HOST } = Config
 const {X_WWW_FORM_URLENCODED, MULTIPART_FORM_DATA} = apiHeader
+const API_SERVER_HOST = import.meta.env.VITE_API_SERVER_HOST;
 
 const host = `${API_SERVER_HOST}/api/employee`
 

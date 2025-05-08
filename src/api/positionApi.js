@@ -1,7 +1,6 @@
 import jwtAxios from "../util/jwtUtil.js";
-import Config from "../../config.js";
-const { API_SERVER_HOST } = Config
 
+const API_SERVER_HOST = import.meta.env.VITE_API_SERVER_HOST;
 const host = `${API_SERVER_HOST}/api/position`
 
 export const selectAllGet = async (pageParam) => {
