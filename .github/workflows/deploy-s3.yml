@@ -1,4 +1,5 @@
-name: Deploy React App to S3
+# .github/workflows/deploy-s3.yml
+name: Deploy Vite App to S3
 
 # master 브랜치에 push 발생 시 실행
 on:
@@ -6,16 +7,22 @@ on:
     branches:
       - master
 
+# 전체 워크플로우에서 공통으로 쓰는 환경변수
+env:
+  AWS_REGION: ${{ secrets.AWS_REGION }}
+  S3_BUCKET: ${{ secrets.S3_BUCKET_NAME }}
+  CLOUDFRONT_DIST_ID: ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }}
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # 1) 레포 클론
+      # 1) 레포지토리 체크아웃
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2) Node.js 설정 (원하는 버전 지정)
+      # 2) Node.js 설치
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -25,30 +32,41 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # 4) 빌드
-      - name: Build React app
+      # 4) Vite 빌드
+      - name: Build Vite app
         run: npm run build
 
-      # 5) AWS 자격증명 설정
+      # 5) dist/ 폴더 존재 확인
+      - name: Verify dist directory
+        run: |
+          echo "현재 디렉터리 구조:"
+          ls -R .
+          if [ ! -d dist ]; then
+            echo "dist/ 폴더가 없습니다!"
+            exit 1
+          fi
+
+      # 6) AWS 자격증명 설정
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id:     ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region:            ${{ secrets.AWS_REGION }}
+          aws-region:            ${{ env.AWS_REGION }}
 
-      # 6) S3에 build 결과물 동기화 (AWS CLI 사용)
-      - name: Sync build to S3
+      # 7) S3에 dist/ 동기화
+      - name: Sync dist to S3
         run: |
-          aws s3 sync build/ s3://${{ secrets.S3_BUCKET_NAME }}/ \
+          echo "→ s3://${{ env.S3_BUCKET }}/ 에 dist/ 동기화 시작"
+          aws s3 sync dist/ s3://${{ env.S3_BUCKET }}/ \
             --delete \
             --acl public-read
 
-      # 7) CloudFront 캐시 무효화
-      - name: Invalidate CloudFront
+      # 8) CloudFront 캐시 무효화
+      - name: Invalidate CloudFront cache
         uses: chetan/invalidate-cloudfront-action@v1
         with:
-          distribution-id: ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }}
+          distribution-id: ${{ env.CLOUDFRONT_DIST_ID }}
           paths: '/*'
         env:
           AWS_ACCESS_KEY_ID:     ${{ secrets.AWS_ACCESS_KEY_ID }}
