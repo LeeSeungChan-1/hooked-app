@@ -128,10 +128,12 @@ function Insert() {
         }
 
         try {
+            console.log('요청')
             const res = await insertPost(formData)
             alert('저장되었습니다.')
-            replaceNavigate('/employee/read/'+res.data.id)
+            // replaceNavigate('/employee/read/'+res.data.id)
         }catch(error){
+            console.log('에러')
             console.log(error)
             setErrors(error.response.data)
         }
@@ -148,7 +150,7 @@ function Insert() {
             <form>
                 <div>
                     <img
-                        src={employee.employeeImagePreview || '/public/image/employee/default.png'}
+                        src={employee.employeeImagePreview || '/image/employee/default.png'}
                         alt="미리보기"
                         style={{ width: '130px', height: '150px', objectFit: 'fill' }}
                     />

@@ -79,10 +79,15 @@ function Header() {
                     {loginState.employeeName ?(
                         <Button onClick={handleOpenUserMenu} color="inherit">
                                 {loginState.employeeName}
-                        </Button>) :(
-                        <Button color="inherit" onClick={() => navigate('/employee/login')}>
-                            로그인
-                        </Button>)
+                        </Button>) :
+                        <>
+                            <Button color="inherit" onClick={() => navigate('/employee/register')}>
+                                회원가입
+                            </Button>
+                            <Button color="inherit" onClick={() => navigate('/employee/login')}>
+                                로그인
+                            </Button>
+                        </>
                     }
                     <Menu
                         sx={{ mt: '45px' }}
@@ -106,8 +111,7 @@ function Header() {
                                 </MenuItem>,
                                 <MenuItem key={'logout'} onClick={handleClickLogout}>
                                     <Typography sx={{ textAlign: 'center' }}>로그아웃</Typography>
-                                </MenuItem>]
-                             : null
+                                </MenuItem>] : null
                         }
                     </Menu>
                 </Box>

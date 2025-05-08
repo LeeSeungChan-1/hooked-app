@@ -18,8 +18,9 @@ export const loginPost = async (loginParam) => {
 };
 
 export const insertPost = async (employee) => {
-    const res = await jwtAxios.post(`${host}/`, employee, MULTIPART_FORM_DATA)
-
+  console.log(host)
+    const res = await axios.post(`${host}/`, employee, MULTIPART_FORM_DATA)
+  console.log(res)
     return res; // 상태값 사용으로 res 전체
 };
 

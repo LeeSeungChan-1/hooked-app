@@ -21,10 +21,7 @@ const employeeRouter = () =>{
     },
     {
         path: "register",
-        element:
-            <LoginCheck authority={config.PREFIX_AUTHORITY.employeeInsert}>
-                <Insert/>
-            </LoginCheck>
+        element: <Insert/>
     },
     {
         path: "list",
