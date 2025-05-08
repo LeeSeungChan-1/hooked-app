@@ -1,6 +1,6 @@
 name: Deploy React App to S3
 
-# master 브랜치에 push 또는 pull_request(머지) 발생 시 실행
+# master 브랜치에 push 발생 시 실행
 on:
   push:
     branches:
@@ -37,18 +37,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region:            ${{ secrets.AWS_REGION }}
 
-      # 6) S3에 build 결과물 동기화
+      # 6) S3에 build 결과물 동기화 (AWS CLI 사용)
       - name: Sync build to S3
-        uses: aws-actions/s3-sync@v1
-        with:
-          # 빌드된 정적 파일 위치 (CRA 기준)
-          source-dir: build
-          # 배포할 버킷 이름
-          destination-bucket: ${{ secrets.S3_BUCKET_NAME }}
-          # S3에 없는 파일은 삭제
-          delete-removed: true
-          # 정적 웹 호스팅용 Public Read 권한 부여
-          acl: public-read
+        run: |
+          aws s3 sync build/ s3://${{ secrets.S3_BUCKET_NAME }}/ \
+            --delete \
+            --acl public-read
 
       # 7) CloudFront 캐시 무효화
       - name: Invalidate CloudFront
