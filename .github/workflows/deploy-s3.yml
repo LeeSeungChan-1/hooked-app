@@ -1,13 +1,11 @@
 # .github/workflows/deploy-s3.yml
 name: Deploy Vite App to S3
 
-# master 브랜치에 push 발생 시 실행
 on:
   push:
     branches:
       - master
 
-# 전체 워크플로우에서 공통으로 쓰는 환경변수
 env:
   AWS_REGION: ${{ secrets.AWS_REGION }}
   S3_BUCKET: ${{ secrets.S3_BUCKET_NAME }}
@@ -18,56 +16,44 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1) 레포지토리 체크아웃
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2) Node.js 설치
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18.x'
 
-      # 3) 의존성 설치
       - name: Install dependencies
         run: npm ci
 
-      # 4) Vite 빌드
       - name: Build Vite app
         run: npm run build
 
-      # 5) dist/ 폴더 존재 확인
       - name: Verify dist directory
         run: |
-          echo "현재 디렉터리 구조:"
           ls -R .
           if [ ! -d dist ]; then
-            echo "dist/ 폴더가 없습니다!"
+            echo "❌ dist/ 폴더가 없습니다!"
             exit 1
           fi
 
-      # 6) AWS 자격증명 설정
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id:     ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region:            ${{ secrets.AWS_REGION }}
+          aws-region:            ${{ env.AWS_REGION }}
 
-      # 7) S3에 dist/ 동기화
-      - name: Sync dist to S3
+      - name: Sync dist to S3 (no ACL)
         run: |
-          echo "→ s3://${{ secrets.AWS_S3_BUCKET_NAME }}/ 에 dist/ 동기화 시작"
-          aws s3 sync dist/ s3://${{ secrets.AWS_S3_BUCKET_NAME }}/ \
-            --delete \
-            --acl public-read
+          echo "→ s3://${{ env.S3_BUCKET }}/ 에 dist/ 동기화 시작"
+          aws s3 sync dist/ s3://${{ env.S3_BUCKET }}/ \
+            --delete
 
-      # 8) CloudFront 캐시 무효화
       - name: Invalidate CloudFront cache
         uses: chetan/invalidate-cloudfront-action@v1
         with:
-          distribution-id: ${{ secrets.CLOUDFRONT_DIST_ID }}
+          distribution-id: ${{ env.CLOUDFRONT_DIST_ID }}
           paths: '/*'
-        env:
-          AWS_ACCESS_KEY_ID:     ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        # AWS creds are already set by configure-aws-credentials
