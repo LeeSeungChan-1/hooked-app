@@ -85,7 +85,7 @@ function Header() {
                                 회원가입
                             </Button>
                             <Button color="inherit" onClick={() => navigate('/employee/login')}>
-                                로그인
+                                로그인2
                             </Button>
                         </>
                     }
