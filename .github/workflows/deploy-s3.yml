@@ -12,7 +12,6 @@ env:
   AWS_CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }}
   VITE_API_SERVER_HOST: ${{ secrets.VITE_API_SERVER_HOST }}
 
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
