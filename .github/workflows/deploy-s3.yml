@@ -8,8 +8,8 @@ on:
 
 env:
   AWS_REGION: ${{ secrets.AWS_REGION }}
-  S3_BUCKET: ${{ secrets.S3_BUCKET_NAME }}
-  CLOUDFRONT_DIST_ID: ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }}
+  AWS_S3_BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME }}
+  AWS_CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }}
 
 jobs:
   build-and-deploy:
@@ -47,13 +47,13 @@ jobs:
 
       - name: Sync dist to S3 (no ACL)
         run: |
-          echo "→ s3://${{ env.S3_BUCKET }}/ 에 dist/ 동기화 시작"
-          aws s3 sync dist/ s3://${{ env.S3_BUCKET }}/ \
+          echo "→ s3://${{ env.AWS_S3_BUCKET_NAME }}/ 에 dist/ 동기화 시작"
+          aws s3 sync dist/ s3://${{ env.AWS_S3_BUCKET_NAME }}/ \
             --delete
 
       - name: Invalidate CloudFront cache
         uses: chetan/invalidate-cloudfront-action@v1
         with:
-          distribution-id: ${{ env.CLOUDFRONT_DIST_ID }}
+          distribution-id: ${{ env.AWS_CLOUDFRONT_DISTRIBUTION_ID }}
           paths: '/*'
         # AWS creds are already set by configure-aws-credentials
